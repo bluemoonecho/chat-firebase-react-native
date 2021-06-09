@@ -4,7 +4,7 @@ import {Button, Input, Image} from 'react-native-elements';
 import {StatusBar} from 'expo-status-bar'
 import { AntDesign } from '@expo/vector-icons'; 
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
     
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -30,15 +30,20 @@ const LoginScreen = () => {
                     placeholder='Password' 
                     autofocus type='Password' 
                     value={password}
+                    secureTextEntry
                     onChangeText={(text)=> setPassword(text)}
                     />
             </View>
             <Button containerStyle={styles.button} onPress={signIn} title='Login' />
-            <Button containerStyle={styles.button} type='outline' title='Register' />
+            <Button onPress={()=> navigation.navigate('Register')} containerStyle={styles.button} type='outline' title='Register' />
             <View style={{height: 100}}/>
         </KeyboardAvoidingView>
     )
 }
+
+
+export default LoginScreen
+
 
 const styles= StyleSheet.create({
     container:{
@@ -57,9 +62,6 @@ const styles= StyleSheet.create({
         marginTop: 10,
     }
 
-
 })
-
-export default LoginScreen
 
 
