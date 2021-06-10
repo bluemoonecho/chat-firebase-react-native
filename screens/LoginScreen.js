@@ -1,17 +1,27 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { StyleSheet, View, Text, KeyboardAvoidingView } from 'react-native';
 import {Button, Input, Image} from 'react-native-elements';
 import {StatusBar} from 'expo-status-bar'
 import { AntDesign } from '@expo/vector-icons'; 
+import { auth } from '../firebase';
 
 const LoginScreen = ({navigation}) => {
     
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    useEffect(()=>{
+        const unsubscribe = auth.onAuthStateChanged((authUser)=>{
+            console.log(authUser);
+            if(authUser){
+                navigation.replace('Home')
+            }
+        });
+        return unsubscribe;
+    },[])
 
     const signIn = () =>{
-
+        auth.signInWithEmailAndPassword(email, password).catch(error => alert(error))
     }
     
     return (
@@ -32,6 +42,7 @@ const LoginScreen = ({navigation}) => {
                     value={password}
                     secureTextEntry
                     onChangeText={(text)=> setPassword(text)}
+                    onSubmitEditing={signIn}
                     />
             </View>
             <Button containerStyle={styles.button} onPress={signIn} title='Login' />
