@@ -18,6 +18,10 @@ import { Platform } from 'react-native';
 import { db, auth} from '../firebase'
 import * as firebase from 'firebase'
 
+//test bunny1
+//testBunny1@test.com
+//test1234
+
 const ChatScreen = ({navigation, route}) => {
     
     const [input, setInput] = useState('');
@@ -38,7 +42,9 @@ const ChatScreen = ({navigation, route}) => {
                     <Avatar 
                         rounded 
                         source={{
-                            uri: 'https://image.pngaaa.com/569/2189569-middle.png'
+                            uri: 
+                            messages[0]?.data.photoURL ||
+                            'https://image.pngaaa.com/569/2189569-middle.png'
                         }}/>
                     <Text
                         style={{color:'white', marginLeft: 10, fontWeight: '700'}}>
@@ -76,7 +82,7 @@ const ChatScreen = ({navigation, route}) => {
                 </View>
             )
         });
-    }, [navigation])
+    }, [navigation, messages])
 
     const sendMessage = () => {
         Keyboard.dismiss();
